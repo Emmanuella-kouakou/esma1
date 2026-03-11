@@ -21,6 +21,7 @@ if (!$etudiant) {
     exit();
 }
 
+/*
 //  Récupérer les matières + les notes
 $sqlNotes = "SELECT nom_mat, coef, note  FROM composer JOIN matiere  ON composer.id_mat = matiere.id_mat WHERE composer.id_etudiant = :id";
 
@@ -37,9 +38,13 @@ foreach ($modules as $module) {
     $totalPoints += $module["note"] * $module["coef"];
     $totalCoeff += $module["coef"];
 }
+    $moyenne = $totalCoeff > 0 ? $totalPoints / $totalCoeff : 0;
+*/
 
-$moyenne = $totalCoeff > 0 ? $totalPoints / $totalCoeff : 0;
-//  Mention automatique
+// Recuperer la moyenne de l'etudiant
+$moyenne = $etudiant["moyenne"];
+
+// Mention automatique
 if ($moyenne >= 16) $mention = "Très Bien";
 elseif ($moyenne >= 14) $mention = "Bien";
 elseif ($moyenne >= 12) $mention = "Assez Bien";
@@ -60,21 +65,34 @@ else $mention = "Ajourné";
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="../assets/css/student-details.css">
     <link rel="stylesheet" href="../assets/css/bootstrap.min.css">
+   
+    
 </head>
 
+
 <body>
+
+
+    <!-- logo déconnexion -->
+    <div class="logo-container">
+        <button class="logout-btn" onclick="window.location.href='../auth/logout.php'">
+            <img src="../assets/images/logout.png" alt="Se déconnecter">
+        </button>
+    </div>
+
+   
 
     <!-- NAVBAR PREMIUM -->
     <nav class="navbar navbar-expand-lg navbar-custom py-2 px-4">
         <div class="container-fluid">
             <div class="d-flex align-items-center">
-                <img src="assets/images/logo-esma.png" alt="Logo ESMA" style="height: 45px;">
+                <img src="../assets/images/logo-esma.png" alt="Logo ESMA" style="height: 45px;">
             </div>
         </div>
     </nav>
 
     <div class="container mt-4">
-        <a href="index.html" class="text-decoration-none text-white opacity-75 mb-4 d-inline-block">
+        <a href="../index.html" class="text-decoration-none text-white opacity-75 mb-4 d-inline-block">
             <i class="fa-solid fa-arrow-left"></i> Retour à l'accueil
         </a>
 
@@ -90,7 +108,7 @@ else $mention = "Ajourné";
                             <div>
                                 <h4 class="fw-bold mb-1 border-0">
                                     <?= htmlspecialchars($etudiant["nom"]) ?></h4>
-                                <p class="text-muted small mb-0"><strong>FÉVRIER 2026 • IDA WEB</strong></p>
+                                <p class="text-muted small mb-0"><strong>MARS 2026 • <?= htmlspecialchars($etudiant["filiere"]) ?> </strong></p>
                             </div>
                         </div>
                         <span class="badge-status status-ajourne">
@@ -112,7 +130,7 @@ else $mention = "Ajourné";
                 </div>
 
                 <!-- DÉTAILS DES MODULES -->
-                <div class="card card-custom p-4">
+               <!-- <div class="card card-custom p-4">
                     <h6 class="fw-bold mb-4 d-flex align-items-center">
                         <div class="p-1 bg-danger bg-opacity-10 rounded me-2">
                             <i class="fa-solid fa-list-ul text-danger"></i>
@@ -130,18 +148,18 @@ else $mention = "Ajourné";
                                 </tr>
                             </thead>
                             <tbody>
-            <?php foreach ($modules as $module): ?>
+           <?php //foreach ($modules as $module): ?>   
             <tr>
-                <td><?= htmlspecialchars($module["nom_mat"]) ?></td>
-                <td class="text-center"><span class="coeff-badge"><?= $module["coef"] ?></span></td>
-                <td class="grade-value text-danger text-center"><?= number_format($module["note"], 2) ?></td>
+                <td><?//= htmlspecialchars($module["nom_mat"]) ?></td>
+                <td class="text-center"><span class="coeff-badge"><?//= $module["coef"] ?></span></td>
+                <td class="grade-value text-danger text-center"><?//= number_format($module["note"], 2) ?></td>
             </tr>
-            <?php endforeach; ?>
+            <?php // endforeach; ?>
             </tbody>
                                     </table>
                     </div>
-                </div>
-            </div>
+                </div>  --> 
+        </div>
 
             <div class="col-lg-4">
                 <!-- ACTIONS HARMONISÉES -->
@@ -175,7 +193,7 @@ const studentName = "<?= htmlspecialchars($etudiant['nom']) ?>";
 const studentMatricule = "<?= htmlspecialchars($etudiant['matricule']) ?>";
 const studentMoyenne = "<?= number_format($moyenne, 2) ?>";
 const studentMention = "<?= $mention ?>";
-const modulesData = <?= json_encode($modules) ?>;
+//const modulesData = <?//= json_encode($modules) ?>;
 
         // Fonction Impression
         function printPage() {
@@ -259,12 +277,12 @@ const modulesData = <?= json_encode($modules) ?>;
             doc.rect(15, startY, 180, 12, 'F');
             doc.setTextColor(255, 255, 255);
             doc.setFontSize(10);
-            doc.text("INTITULÉ DE LA MATIÈRE", 20, startY + 8);
-            doc.text("COEFF", 130, startY + 8);
+           // doc.text("INTITULÉ DE LA MATIÈRE", 20, startY + 8);
+            //doc.text("COEFF", 130, startY + 8);
             doc.text("MOYENNE", 165, startY + 8);
 
             // Lignes Tableau
-           const data = modulesData.map(matiere => [ matiere.nom_mat, matiere.coef, parseFloat(m.note).toFixed(2)]);
+           //const data = modulesData.map(matiere => [ matiere.nom_mat, matiere.coef, parseFloat(m.note).toFixed(2)]);
 
             let currentY = startY + 12;
             doc.setTextColor(50, 50, 50);
@@ -331,7 +349,7 @@ const modulesData = <?= json_encode($modules) ?>;
             doc.setTextColor(150, 150, 150);
             doc.setFontSize(8);
             doc.setFont("helvetica", "normal");
-            doc.text("ESMA Riviera II - École Supérieure des Métiers de l'Audiovisuel et du Design", 105, 287, { align: "center" });
+            doc.text("ESMA Riviera II - École de Specialités Multimedia d'Abidjan", 105, 287, { align: "center" });
             doc.text("Portail Étudiant • Document officiel à caractère provisoire", 105, 292, { align: "center" });
 
             doc.save(`Bulletin_Notes_ESMA_${studentName.replace(/ /g, "_")}_Ajourne.pdf`);

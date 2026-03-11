@@ -21,6 +21,7 @@ if (!$etudiant) {
     header("Location: ../auth/login.php");
     exit();
 }
+/*
 
 //  Récupérer les matières + les notes
 $sqlNotes = "SELECT nom_mat, coef, note FROM composer  JOIN matiere ON composer.id_mat = matiere.id_mat WHERE composer.id_etudiant = :id";
@@ -39,9 +40,15 @@ foreach ($modules as $module) {
     $totalCoeff += $module["coef"];
 }
 
-$moyenne = $totalCoeff > 0 ? $totalPoints / $totalCoeff : 0;
 
-//  Mention automatique
+$moyenne = $totalCoeff > 0 ? $totalPoints / $totalCoeff : 0;  */
+
+
+
+// Recuperer la moyenne
+$moyenne = $etudiant["moyenne"];
+
+// Mention automatique
 if ($moyenne >= 16) $mention = "Très Bien";
 elseif ($moyenne >= 14) $mention = "Bien";
 elseif ($moyenne >= 12) $mention = "Assez Bien";
@@ -72,17 +79,25 @@ else $mention = "Ajourné";
 
 <body>
 
+ <!-- logo déconnexion -->
+    <div class="logo-container">
+        <button class="logout-btn" onclick="window.location.href='../auth/logout.php'">
+            <img src="../assets/images/logout.png" alt="Se déconnecter">
+        </button>
+    </div>
+
+
     <!-- NAVBAR PREMIUM -->
     <nav class="navbar navbar-expand-lg navbar-custom py-2 px-4">
         <div class="container-fluid">
             <div class="d-flex align-items-center">
-                <img src="assets/images/logo-esma.png" alt="Logo ESMA" style="height: 45px;">
+                <img src="../assets/images/logo-esma.png" alt="Logo ESMA" style="height: 45px;">
             </div>
         </div>
     </nav>
 
     <div class="container mt-4">
-        <a href="index.html" class="text-decoration-none text-white opacity-75 mb-4 d-inline-block">
+        <a href="../index.html" class="text-decoration-none text-white opacity-75 mb-4 d-inline-block">
             <i class="fa-solid fa-arrow-left"></i> Retour à l'accueil
         </a>
 
@@ -99,7 +114,7 @@ else $mention = "Ajourné";
                                <h4 class="fw-bold mb-1">
                           <?= htmlspecialchars($etudiant["nom"]) ?>
                                 </h4>
-                                <p class="text-muted small mb-0"><strong>FÉVRIER 2026 • IDA WEB</strong></p>
+                                <p class="text-muted small mb-0"><strong>MARS 2026 • <?= htmlspecialchars($etudiant["filiere"]) ?> </strong></p>
                             </div>
                         </div>
                         <span class="badge-status status-admis">
@@ -122,7 +137,7 @@ else $mention = "Ajourné";
                 </div>
 
                 <!-- DÉTAILS DES MODULES -->
-                <div class="card card-custom p-4">
+                 <!--<div class="card card-custom p-4">
                     <h6 class="fw-bold mb-4 d-flex align-items-center">
                         <div class="p-1 bg-primary bg-opacity-10 rounded me-2">
                             <i class="fa-solid fa-list-ul text-primary"></i>
@@ -141,24 +156,24 @@ else $mention = "Ajourné";
                             </thead>
                             <tbody>
                                <tbody>
-<?php foreach ($modules as $module): ?>
-<tr>
-    <td><?= htmlspecialchars($module["nom_mat"]) ?></td>
-    <td class="text-center">
-        <span class="coeff-badge">
-            <?= $module["coef"] ?>
-        </span>
-    </td>
-    <td class="grade-value text-center">
-        <?= number_format($module["note"], 2) ?>
-    </td>
-</tr>
-<?php endforeach; ?>
-</tbody>
+                    <?php //foreach ($modules as $module): ?>
+                    <tr>
+                        <td><?//= htmlspecialchars($module["nom_mat"]) ?></td>
+                        <td class="text-center">
+                            <span class="coeff-badge">
+                                <?//= $module["coef"] ?>
+                            </span>
+                        </td>
+                        <td class="grade-value text-center">
+                            <?//= number_format($module["note"], 2) ?>
+                        </td>
+                    </tr>
+                    <?php// endforeach; ?>
+                    </tbody>
                             </tbody>
                         </table>
                     </div>
-                </div>
+                </div>  -->
             </div>
 
             <div class="col-lg-4">
@@ -193,7 +208,7 @@ const studentName = "<?= htmlspecialchars($etudiant['nom']) ?>";
 const studentMatricule = "<?= htmlspecialchars($etudiant['matricule']) ?>";
 const studentMoyenne = "<?= number_format($moyenne, 2) ?>";
 const studentMention = "<?= $mention ?>";
-const modulesData = <?= json_encode($modules) ?>;
+//const modulesData = <?//= json_encode($modules) ?>;
 
 
 
@@ -281,13 +296,12 @@ const modulesData = <?= json_encode($modules) ?>;
             doc.rect(15, startY, 180, 12, 'F');
             doc.setTextColor(255, 255, 255);
             doc.setFontSize(10);
-            doc.text("INTITULÉ DE LA MATIÈRE", 20, startY + 8);
-            doc.text("COEFF", 130, startY + 8);
+            //doc.text("INTITULÉ DE LA MATIÈRE", 20, startY + 8);
+            //doc.text("COEFF", 130, startY + 8);
             doc.text("MOYENNE", 165, startY + 8);
 
             // Lignes Tableau
-            const data = modulesData.map(matiere => [ matiere.nom_mat, matiere.coef, parseFloat(m.note).toFixed(2)
-]);
+           // const data = modulesData.map(matiere => [ matiere.nom_mat, matiere.coef, parseFloat(m.note).toFixed(2)]);
 
             let currentY = startY + 12;
             doc.setTextColor(50, 50, 50);
@@ -344,7 +358,7 @@ const modulesData = <?= json_encode($modules) ?>;
             doc.setTextColor(150, 150, 150);
             doc.setFontSize(8);
             doc.setFont("helvetica", "normal");
-            doc.text("ESMA Riviera II - École Supérieure des Métiers de l'Audiovisuel et du Design", 105, 287, { align: "center" });
+            doc.text("ESMA Riviera II - École de Specialités Multimedia d'Abidjan", 105, 287, { align: "center" });
             doc.text("Portail Étudiant • Document officiel à caractère provisoire", 105, 292, { align: "center" });
 
             doc.save(`Bulletin_Notes_ESMA_${studentName.replace(/ /g, "_")}_Succes.pdf`);

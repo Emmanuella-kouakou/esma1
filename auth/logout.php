@@ -1,10 +1,10 @@
 <?php
 session_start();
 
-if (isset($_POST['confirm_logout'])) {
+// détruire toutes les données de session
+session_destroy();
 
-    $_SESSION = [];
-    session_destroy();
-    header("Location: login.php");
-    exit();
-}
+// redirection vers la page d'accueil (login.php par exemple)
+header("Location: ../index.html");
+exit();
+?>

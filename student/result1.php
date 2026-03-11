@@ -19,7 +19,12 @@ $etudiant = $stmt->fetch(PDO::FETCH_ASSOC);
 if (!$etudiant) {
     header("Location: ../auth/login.php");
     exit();
+
 }
+
+
+
+/*
 
 //  Calculer la moyenne depuis la table composer
 $sqlNotes = "SELECT AVG(note) AS moyenne 
@@ -31,8 +36,8 @@ $stmtNotes->bindParam(":id", $id);
 $stmtNotes->execute();
 $result = $stmtNotes->fetch(PDO::FETCH_ASSOC);
 
-$moyenne = $result["moyenne"];
-
+$moyenne = $result["moyenne"]; */
+$moyenne = $etudiant["moyenne"];
 
 ?>
 

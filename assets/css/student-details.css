@@ -327,3 +327,32 @@ body {
                 text-decoration: underline;
         }
 }
+
+
+     .logout-btn {
+  background: transparent; /* Fond transparent pour bien voir l'icône */
+  border: none;
+  padding: 8px; /* Ajusté pour que l'icône rentre bien */
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.3s ease, transform 0.2s ease;
+}
+
+/* Effet au survol corrigé */
+.logout-btn:hover {
+  background-color: #ffe6e6; /* Un fond légèrement rouge/rosé au survol */
+  transform: scale(1.05);
+}
+
+/* Zone logo en haut à droite */
+.logo-container {
+  position: absolute;
+  top: 15px; /* Ajusté pour s'aligner avec ta barre de navigation */
+  right: 20px;
+  z-index: 1000; /* S'assure que le bouton reste cliquable au-dessus du reste */
+}
+
+.logo-container img {
+  width: 35px; /* Taille de l'icône */
+  height: auto;
+}

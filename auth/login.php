@@ -22,17 +22,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 $_SESSION["id_etudiant"] = $etudiant["id_etudiant"];
                 $_SESSION["nom"] = $etudiant["nom"];
 
-                // Calculer la moyenne depuis la table composer
-                $sqlNotes = "SELECT AVG(note) AS moyenne 
-                             FROM composer 
-                             WHERE id_etudiant = :id_etudiant";
-
-                $stmtNotes = $pdo->prepare($sqlNotes);
-                $stmtNotes->bindParam(":id_etudiant", $etudiant["id_etudiant"]);
-                $stmtNotes->execute();
-
-                $result = $stmtNotes->fetch(PDO::FETCH_ASSOC);
-                $moyenne = $result["moyenne"];
+                //recuperer la moyenne de l'etudient
+                $moyenne = $etudiant["moyenne"];
 
                 if ($moyenne !== null) {
 
@@ -91,7 +82,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <nav class="navbar navbar-dark custom-navbar">
         <div class="container d-flex justify-content-between">
             <span class="navbar-brand mb-0 h1">ESMA RIVIERA II</span>
-            <a href="index.html" class="btn btn-sm btn-outline-light border-0 opacity-75">Accueil</a>
+            <a href="../index.html" class="btn btn-sm btn-outline-light border-0 opacity-75">Accueil</a>
         </div>
     </nav>
 
@@ -112,7 +103,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
                 <h4 class="mb-2"><strong>Identification</strong></h4>
                 <p class="text-muted small mb-4">
-                    Entrez votre matricule pour accéder à vos résultats de la session 2026.
+                    Entrez votre matricule .
                 </p>
 
                 <form  method="POST" action="">

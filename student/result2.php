@@ -20,7 +20,7 @@ if (!$etudiant) {
     header("Location: ../auth/login.php");
     exit();
 }
-
+/*
 //  Calcul moyenne depuis la table composer
 $sqlNotes = "SELECT AVG(note) AS moyenne 
              FROM composer 
@@ -31,8 +31,9 @@ $stmtNotes->bindParam(":id", $id);
 $stmtNotes->execute();
 $result = $stmtNotes->fetch(PDO::FETCH_ASSOC);
 
-$moyenne = $result["moyenne"];
+$moyenne = $result["moyenne"];  */
 
+$moyenne = $etudiant["moyenne"];
 
 ?>
 
