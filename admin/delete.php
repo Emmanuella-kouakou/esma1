@@ -1,10 +1,8 @@
 <?php
 
-
 include "../config/database.php";
-
+// on recupere l'id du fichier dans l'url
 $id = $_GET['id'];
-
 // récupérer les fichiers dans la table fichiers
 $sql = "SELECT * FROM fichiers WHERE id_fichier = :id";
 $stmt = $pdo->prepare($sql);
@@ -29,41 +27,8 @@ if($fichier){
     $stmt = $pdo->prepare($sql);
     $stmt->execute([':id'=>$id]);
 }
-
+// redirection vers le dashboard de l'admin apres suppression du fichier
 header("Location: ../admin/admin_dash.php");
 
-
-
-
-
-
-
-/*
-include "../config/database.php";
-$id = $_GET['id'];
-
-$sql = "SELECT * FROM fichiers WHERE id_fichier=:id";
-$stmt = $pdo->prepare($sql);
-$stmt->execute([':id'=>$id]);
-$fichier = $stmt->fetch();
-
-// 1 supprimer les étudiants liés au fichier
-$sql = "DELETE FROM etudiant WHERE id_fichier = :id";
-$stmt = $pdo->prepare($sql);
-$stmt->execute([':id'=>$id]);
-
-
-// 2 supprimer le fichier
-$sql = "DELETE FROM fichiers WHERE id_fichier = :id";
-$stmt = $pdo->prepare($sql);
-$stmt->execute([':id'=>$id]);
-
-// supprimer le fichier dans le dossier
-unlink("../doc/" . $fichier['nom_fichier']);
-
-
-
-
-header("Location: ../admin/admin_dash.php");*/
 
 ?>

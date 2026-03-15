@@ -451,7 +451,7 @@ $admins = $adminsStmt->fetchAll(PDO::FETCH_ASSOC);
                 <i class="fa-solid fa-gear"></i>
                 <span>Paramètres</span>
             </a>
-            <a href="../auth/logout.php" class="tab-item">
+            <a href="../admin/login_admin.php" class="tab-item">
                 <i class="fa-solid fa-arrow-right-from-bracket"></i>
                 <span>Déconnexion</span>
             </a>

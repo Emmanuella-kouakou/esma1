@@ -20,7 +20,7 @@ if(isset($_FILES["fichier"])){
         $stmt->execute();
 
         // récupérer l'id du fichier
-$id_fichier = $pdo->lastInsertId();
+           $id_fichier = $pdo->lastInsertId();
         // Ouvrir le fichier CSV
         $handle = fopen($cheminFinal,"r");
 
